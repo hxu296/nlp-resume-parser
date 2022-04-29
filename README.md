@@ -4,7 +4,7 @@ GPT-3 based resume parser as a REST API that transforms a [resume pdf like this]
 
 ### Quick Start
 Install dependencies, run the `bash build.sh` in the project root.   
-To run the RESTFull service in 2 steps:
+To run the RESTFull service in 3 steps:
 1. get your [OpenAI API Key](https://openai.com/api/)
 2. set the environment variable OPENAI_API_KEY to your API key: `export OPENAI_API_KEY=YOURKEY`
 3. run `bash run.sh` in the project root. By default, a Flask server will start listening to port 5000 of localhost. Feel free to check it out with your browser.
