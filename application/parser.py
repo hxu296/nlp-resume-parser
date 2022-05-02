@@ -2,6 +2,7 @@ import pdftotext
 import openai
 import re
 import logging
+import threading
 
 class ResumeParser():
     def __init__(self, OPENAI_API_KEY):
@@ -79,7 +80,7 @@ Write tables to summarize all experiences from the resume with the following tit
         )
         return response
 
-    def query_basic_info(self: object, pdf_str: str) -> dict:
+    def query_basic_info(self: object, resume: dict, pdf_str: str) -> None:
         """
         Query basic user information and return a well-origanized dictionary.
         Send request to GPT-3 via query_completion and parse the response object.
@@ -121,9 +122,9 @@ Write tables to summarize all experiences from the resume with the following tit
         #    if info not in response or not self.resume_contains_info(pdf_str, response_dict[info]):
         #        response_dict[info] = None  # if not, invalidate the value
 
-        return response_dict
+        resume['basic_info'] = response_dict
 
-    def query_work_experience(self: object, pdf_str: str) -> list:
+    def query_work_experience(self: object, resume: dict, pdf_str: str) -> None:
         """
         Query work experience and return a well-origanized dictionary.
         Send request to GPT-3 via query_completion and parse the response object.
@@ -156,13 +157,11 @@ Write tables to summarize all experiences from the resume with the following tit
                     'Job Location':location,
                     'Job Duration':duration,
                     'Job Description':job_content})
-            print(prompt)
-            print(response_text)
-            return jobs
+            resume['work_experience'] = jobs
         except Exception as e:
             self.logger.error(f'query_work_experience failed with the following exception:\n {e}')
             self.logger.error(f'response_text:\n {response_text}')
-            return []
+            resume['work_experience'] = []
 
     def resume_contains_info(self: object, pdf_str: str, info: str) -> bool:
         """
@@ -193,10 +192,17 @@ Write tables to summarize all experiences from the resume with the following tit
         """
         resume = {}
         pdf_str = self.pdf2string(pdf_path)
-        if query_info: 
-            basic_info = self.query_basic_info(pdf_str)
-            resume['basic_info'] = basic_info
-        if query_work: 
-            work_experience = self.query_work_experience(pdf_str)
-            resume['work_experience'] = work_experience
+        if query_info and query_work:
+            # each query will use 1 thread
+            basic_info_thread = threading.Thread(target=self.query_basic_info, args=(resume, pdf_str))
+            work_experience_thread = threading.Thread(target=self.query_work_experience, args=(resume, pdf_str))
+            basic_info_thread.start()
+            work_experience_thread.start()
+
+            basic_info_thread.join()
+            work_experience_thread.join()
+        elif query_info: 
+            self.query_basic_info(resume, pdf_str)
+        elif query_work: 
+            self.query_work_experience(resume, pdf_str)
         return resume
