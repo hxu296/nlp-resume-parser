@@ -11,7 +11,7 @@ To run the RESTFull service in 3 steps:
 
 ### Supported Fields
 - Basic Information
-  - [x] fist name
+  - [x] first name
   - [x] last name
   - [x] full name
   - [x] email 
