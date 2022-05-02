@@ -1,89 +1,42 @@
 {
   "basic_info": {
-    "GPA": "3.94", 
-    "GitHub main page URL": "github.com/hxu296", 
-    "LinkedIn URL": null, 
-    "U.S. phone number": "6086987552", 
-    "education level": "BS", 
+    "GPA": "3.94 / 4.0", 
+    "education_level": "BS", 
     "email": "hxu296@wisc.edu", 
-    "first name": "Huan", 
-    "full name": "Huan Xu", 
-    "graduation month": "5", 
-    "graduation year": "2023", 
-    "last name": "Xu", 
+    "first_name": "Huan", 
+    "full_name": "Huan Xu", 
+    "github_main_page_url": "github.com/hxu296", 
+    "graduation_month": "May", 
+    "graduation_year": "2023", 
+    "last_name": "Xu", 
+    "linkedin_url": "", 
     "location": "Madison, WI", 
-    "majors": [
-      "Computer Sciences (honor)", 
-      "Mathematics", 
-      "Statistics"
-    ], 
-    "portfolio website URL": "hxu296.github.io/home", 
+    "majors": "Computer Sciences (honor), Mathematics, Statistics", 
+    "phone_number": "6086987552", 
+    "portfolio_website_url": "hxu296.github.io/home", 
     "university": "University of Wisconsin-Madison"
   }, 
   "work_experience": [
     {
-      "Job Description": "Hosted office hours to answer Computer Graphics questions regarding graphics concepts (e.g. transformations, curves, meshes, shaders, ray tracing, etc.) and APIs (e.g. Canvas, SVG, glMatrix, GLSL, WebGL, Three.js, etc.) for 7 hours each week. Updated the course's website using the Hugo framework and Github Action's CI/CD workflow. Peer-reviewed and debugged bi-weekly student workbooks using the Node.js framework in JavaScript.", 
-      "Job Duration": "Jan 2022 - Present", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "University of Wisconsin-Madison", 
-      "Job Title": "Undergraduate Teaching Assistant for Computer Graphics"
+      "company": "Intel Corporation", 
+      "duration": "May 2022", 
+      "job_summary": "Supporting aspects of both a Continuous Integration (CI) system and Project Dashboard for an active and growing GPU-based project. Implementing features of a full-stack web application through use-case-driven design for both internal and customer needs. Implementing toolchain features to improve developer efficiency and product reliability and performance.", 
+      "job_title": "Incoming GPU Software Development Engineer Internship", 
+      "location": ""
     }, 
     {
-      "Job Description": "Architected a RESTful real-time resume parsing service that leverages OpenAI's Natural Language Processing engine GPT-3 by using Django, PostgreSQL, and OpenAI API. Integrated this new service into the company's micro-service framework by using Docker. Updated Jenkins' CI/CD workflow to smoothen deployment and improve fault tolerance for the new service.", 
-      "Job Duration": "Jan 2022 - Apr 2022", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "EasyJobs", 
-      "Job Title": "Machine Learning Engineer, Part-Time Internship"
+      "company": "University of Wisconsin-Madison", 
+      "duration": "Jan 2022 - Present", 
+      "job_summary": "Hosted office hours to answer Computer Graphics questions regarding graphics concepts (e.g. transformations, curves, meshes, shaders, ray tracing, etc.) and APIs (e.g. Canvas, SVG, glMatrix, GLSL, WebGL, Three.js, etc.) for 7 hours each week. Updated the course's website using the Hugo framework and Github Action's CI/CD workflow. Peer-reviewed and debugged bi-weekly student workbooks using the Node.js framework in JavaScript.", 
+      "job_title": "Undergraduate Teaching Assistant for Computer Graphics", 
+      "location": "Madison, WI"
     }, 
     {
-      "Job Description": "Worked with a world-top commercial bank and was responsible for both improving the ETL routine of the Data Warehouse using Perl and Bash script and performing custom data extraction tasks using Teradata-SQL and DSQL for fraud detection. Led the communication, demand analysis, and SQL development for a complex data extraction task requiring joining more than 20 tables across 2 databases. Wrote peer-reviewed SQL and communicated with the operation team to ship the data in time.", 
-      "Job Duration": "Jun 2021 - Aug 2021", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "Teradata", 
-      "Job Title": "Data Engineer, Full-Time Internship"
-    }, 
-    {
-      "Job Description": "Wrote research proposal about real-time 3D motion capture systems on edge devices based on the critical observation that 3D temporal consistency can be used to compensate more noisy 2D information for lower FLOP and higher FPS. Developed and deployed a light-weight 3D Human Pose Estimation pipeline on Jeston Nano that integrates YOLOv5, HRNet-Lite, and VideoPose3D using Docker and TensorRT and improved FPS by weight quantization and CNN channel pruning.", 
-      "Job Duration": "Jan 2022 - Present", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "University of Wisconsin-Madison", 
-      "Job Title": "Research Assistant"
-    }, 
-    {
-      "Job Description": "Synthesized realistic 2D keypoints to pretrain 3D estimators, showing a significant decrease of PA-MPJPE from 68.0 mm to 61.3 mm on the 3DPW dataset compared with the pretrained-with-H36M baseline. Served as the 3rd author for the journal paper Learning from Synthetic Humans for Accurate and Generalizable 3D Pose Estimation targeting IEEE Transactions on Image Processing. Spearheaded the development of a graphic rendering pipeline that infers human mesh from 3D human joints and shape, and calculates dense depth maps with respect to sampled camera views by using OpenGL, Pytorch, and Scipy.", 
-      "Job Duration": "Jan 2021 - Present", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "University of Wisconsin-Madison", 
-      "Job Title": "Research Assistant"
-    }, 
-    {
-      "Job Description": "Collaboratively proposed a non-intrusive, visioned-based system to estimate the Body Asymmetry Angle by using pre-trained 3D Human Pose Estimators. Served as the 3rd author for the journal paper A Single-Camera Method for Estimating Lift Asymmetry Angles using Deep Learning Computer Vision Algorithms targeting The Journal of the Human Factors and Ergonomics Society. Verified experiment results by setting up and running 6 human pose estimation methods on Unix-based OS with Docker and Anaconda and showed that our method produces statistically more accurate results than the previous SOTA by using the paired t-test.", 
-      "Job Duration": "Sep 2020 - Jan 2021", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "University of Wisconsin-Madison", 
-      "Job Title": "Research Volunteer"
-    }, 
-    {
-      "Job Description": "Developed and published an R shiny App that ranks U.S. academic institutions according to their public contributions on GitHub. Used ggoplot2 visualizations to tell interesting stories about universities, repositories, and their committers. Wrote SQL to extract 140k rows of unique GitHub committer information from Google Big Query's public data warehouse \"github-repos\" and transformed raw data into a tidy structured format in R using tidyverse, dplyr, and regular expression.", 
-      "Job Duration": "Feb 2022 - Present", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "Self-Employed", 
-      "Job Title": "Developer"
-    }, 
-    {
-      "Job Description": "Developed a WeChat mini-program that allows users to search, browse, and share office supply products from Ningbo Hongyuan Electronic Technology Co. using React.js and Bootstrap in JavaScript. Paired the mini-program with a background management website where administrators can create, update, and delete products constructed with React.js and Express.js.", 
-      "Job Duration": "Sep 2021 - Present", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "Self-Employed", 
-      "Job Title": "Developer"
-    }, 
-    {
-      "Job Description": "Built a customizable stock notifier for Newegg and BestBuy with a Telegram command-line interface that allows users to personalize search filters, fire up notifiers, and receive notifications all through 1 Telegram bot account by using Scrapy, Selenium, BeautifulSoup, Regex, Requests, and the Python-Telegram-Bot API. Deployed the bot to a Raspberry Pi 4 and purchased 3 Nvidia 30 series GPUs in 1 month with its assistance.", 
-      "Job Duration": "Dec 2020 - Present", 
-      "Job Location": "Madison, WI", 
-      "Job Organization": "Self-Employed", 
-      "Job Title": "Developer"
+      "company": "Teradata Corporation", 
+      "duration": "Jun 2021 - Aug 2021", 
+      "job_summary": "Worked with a world-top commercial bank and was responsible for both improving the ETL routine of the Data Warehouse using Perl and Bash script and performing custom data extraction tasks using Teradata-SQL and DSQL for fraud detection. Led the communication, demand analysis, and SQL development for a complex data extraction task requiring joining more than 20 tables across 2 databases. Wrote peer-reviewed SQL and communicated with the operation team to ship the data in time.", 
+      "job_title": "Data Engineer Internship", 
+      "location": ""
     }
   ]
 }
-

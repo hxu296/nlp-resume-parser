@@ -2,29 +2,17 @@ import pdftotext
 import openai
 import re
 import logging
-import threading
+import json
 
 class ResumeParser():
     def __init__(self, OPENAI_API_KEY):
         # set GPT-3 API key from the environment vairable
         openai.api_key = OPENAI_API_KEY
-        # GPT-3 completion question for basic user information
-        self.basic_info_questions = \
-"""Summarize the resume text into key-value pairs with all of the following keys: first name, last name, full name, email, U.S. phone number, location, portfolio website URL, LinkedIn URL, GitHub main page URL, university, education level (BS or MS), graduation year, graduation month, majors, GPA. Following the format of the partial example below:
-first name: first
-last name: last
-full name: name
-graduation year: 2022
-graduation month: 5
-education level: BS
-GPA: 3.8
+        # GPT-3 completion questions
+        self.prompt_questions = \
+"""Summarize the text below into a JSON with exactly the following structure {basic_info: {first_name, last_name, full_name, email, phone_number, location, portfolio_website_url, linkedin_url, github_main_page_url, university, education_level (BS, MS, or PhD), graduation_year, graduation_month, majors, GPA}, work_experience: [{job_title, company, location, duration, job_summary}]}
 """
-        # GPT-3 completion question for work experiences
-        self.work_experience_questions = \
-"""
-Write tables to summarize all experiences from the resume with the following titles: Job Title, Job Organization, Job Location, Job Duration, Job Description. Summarize as many experiences as possible.
-"""
-        # set up this parser's logger
+       # set up this parser's logger
         logging.basicConfig(filename='logs/parser.log', level=logging.DEBUG)
         self.logger = logging.getLogger()
 
@@ -79,130 +67,20 @@ Write tables to summarize all experiences from the resume with the following tit
         presence_penalty=presence_penalty
         )
         return response
-
-    def query_basic_info(self: object, resume: dict, pdf_str: str) -> None:
+    
+    def query_resume(self: object, pdf_path: str) -> dict:
         """
-        Query basic user information and return a well-origanized dictionary.
-        Send request to GPT-3 via query_completion and parse the response object.
-        :param pdf_str: PDF content string.
-        :param questions: Question question for the GPT-3 completion task.
-        :return: A dictionary with keys (name, email, U.S. phone number, location, 
-        personal website url, university, graduation time, majors, GPA)
+        Query GPT-3 for the work experience and / or basic information from the resume at the PDF file path.
+        :param pdf_path: Path to the PDF file.
+        :return dictionary of resume with keys (basic_info, work_experience).
         """
-        questions = self.basic_info_questions
-        prompt = questions + '\n' + pdf_str
-        max_tokens = 500
-        for engine in ['text-davinci-002']:
-            try:
-                response = self.query_completion(prompt,engine=engine,max_tokens=max_tokens)
-                response_text = response['choices'][0]['text'].strip()
-                response_list = response_text.split('\n')
-                response_dict = {pair[0].strip():pair[1].strip() for pair in [tuple(entry.split(':')) for entry in response_list] if len(pair) > 1}
-                if response_dict: break
-            except Exception as e:
-                self.logger.error(f'query_basic_info failed with the following exception: {e}')
-                self.logger.error(f'response_text:\n{response_text}')
-                return {}
-        # split majors into list
-        response_dict['majors'] = [major.strip() for major in response_dict['majors'].split(',')]
-        # website sanity check
-        if 'portfolio website URL' not in response_dict or not re.match(r"(\w+\.)?\w+\.\w+(\/\w*)?", response_dict['portfolio website URL']):
-            response_dict['portfolio website URL'] = None
-        if 'LinkedIn URL' not in response_dict or not re.match(r"(\w+\.)?\w+\.\w+(\/\w*)?", response_dict['LinkedIn URL']):
-            response_dict['LinkedIn URL'] = None
-        if 'GitHub main page URL' not in response_dict or not re.match(r"(\w+\.)?\w+\.\w+(\/\w*)?", response_dict['GitHub main page URL']):
-            response_dict['GitHub main page URL'] = None
-
-        # email sanity check
-        if 'email' not in response_dict or not re.match(r"^\w+.*@(.+)\.([a-z]{2,4}|\d+)$", response_dict['email']):
-            response_dict['email'] = None
-        # Experimental 
-        # ensure that all personal information in the response_dict are present in the pdf_str
-        #for info in ['first name', 'last name', 'email', 'U.S. phone number', 'location', 'personal website URL', 'university', 'graduation time', 'GPA']:
-        #    if info not in response or not self.resume_contains_info(pdf_str, response_dict[info]):
-        #        response_dict[info] = None  # if not, invalidate the value
-
-        resume['basic_info'] = response_dict
-
-    def query_work_experience(self: object, resume: dict, pdf_str: str) -> None:
-        """
-        Query work experience and return a well-origanized dictionary.
-        Send request to GPT-3 via query_completion and parse the response object.
-        :param pdf_str: PDF content string.
-        :param questions: Question question for the GPT-3 completion task.
-        :return: A list of dictionaries, where each dictory is a work experience with keys
-        (Jon Title, Company, Location, Duration, Job Content)
-        """
-        questions = self.work_experience_questions
-        prompt = questions + '\n' + pdf_str + '\n'
+        resume = {}
+        pdf_str = self.pdf2string(pdf_path)
+        prompt = self.prompt_questions + '\n' + pdf_str
         max_tokens = 1500
         engine = 'text-davinci-002'
         response = self.query_completion(prompt,engine=engine,max_tokens=max_tokens)
         response_text = response['choices'][0]['text'].strip()
-        try:
-            jobs = []
-            for job in response_text.split('Job Title: '):
-                if not job.strip(): continue
-                partition = job.split('Job Organization: ')
-                job_title = partition[0].strip()
-                partition = partition[1].split('Job Location: ')
-                company = partition[0].strip()
-                partition = partition[1].split('Job Duration: ')
-                location = partition[0].strip()
-                partition = partition[1].split('Job Description:')
-                duration = partition[0].strip()
-                job_content = partition[1].strip()
-                jobs.append({'Job Title':job_title,
-                    'Job Organization':company,
-                    'Job Location':location,
-                    'Job Duration':duration,
-                    'Job Description':job_content})
-            resume['work_experience'] = jobs
-        except Exception as e:
-            self.logger.error(f'query_work_experience failed with the following exception:\n {e}')
-            self.logger.error(f'response_text:\n {response_text}')
-            resume['work_experience'] = []
-
-    def resume_contains_info(self: object, pdf_str: str, info: str) -> bool:
-        """
-        Check if the resume contains the information.
-        :param pdf_str: PDF content string.
-        :param info: Information to be checked.
-        :return: True if the resume contains the information, False otherwise.
-        """
-        # normalize pdf_str and info: remove all spaces, special characters, and punctuations
-        pdf_str = re.sub(r'\s+', '', pdf_str)
-        pdf_str = re.sub(r'[^\w\s]', '', pdf_str)
-        info = re.sub(r'\s+', '', info)
-        info = re.sub(r'[^\w\s]', '', info)
-        # check if the pdf_str contains the info
-        return info in pdf_str
-
-    def query_resume(self: object, 
-                    pdf_path: str, 
-                    query_info: bool = True, 
-                    query_work: bool = True) -> dict:
-        """
-        Query GPT-3 for the work experience and / or basic information from the resume at the PDF file path.
-        :param pdf_path: Path to the PDF file.
-        :param query_info: True if we want to query basic info, False otherwise
-        :param query_work: True if we want to query work experience, False otherwise
-        :return dictionary of resume with keys (basic_info, work_experience). See the documentation for
-        query_basic_info and query_work_experience for value types.
-        """
-        resume = {}
-        pdf_str = self.pdf2string(pdf_path)
-        if query_info and query_work:
-            # each query will use 1 thread
-            basic_info_thread = threading.Thread(target=self.query_basic_info, args=(resume, pdf_str))
-            work_experience_thread = threading.Thread(target=self.query_work_experience, args=(resume, pdf_str))
-            basic_info_thread.start()
-            work_experience_thread.start()
-
-            basic_info_thread.join()
-            work_experience_thread.join()
-        elif query_info: 
-            self.query_basic_info(resume, pdf_str)
-        elif query_work: 
-            self.query_work_experience(resume, pdf_str)
+        print(response_text)
+        resume = json.loads(response_text)
         return resume
