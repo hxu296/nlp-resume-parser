@@ -1,6 +1,6 @@
 {
   "basic_info": {
-    "GPA": "3.94 / 4.0", 
+    "GPA": "3.88 / 4.0", 
     "education_level": "BS", 
     "email": "hxu296@wisc.edu", 
     "first_name": "Huan", 
@@ -9,34 +9,43 @@
     "graduation_month": "May", 
     "graduation_year": "2023", 
     "last_name": "Xu", 
-    "linkedin_url": "", 
+    "linkedin_url": "linkedin.com/in/huan-xu-999700169", 
     "location": "Madison, WI", 
-    "majors": "Computer Sciences (honor), Mathematics, Statistics", 
+    "majors": [
+      "Computer Sciences (honor)", 
+      "Mathematics", 
+      "Statistics"
+    ], 
     "phone_number": "6086987552", 
-    "portfolio_website_url": "hxu296.github.io/home", 
+    "portfolio_website_url": "github.com/hxu296", 
     "university": "University of Wisconsin-Madison"
   }, 
   "work_experience": [
     {
-      "company": "Intel Corporation", 
-      "duration": "May 2022", 
-      "job_summary": "Supporting aspects of both a Continuous Integration (CI) system and Project Dashboard for an active and growing GPU-based project. Implementing features of a full-stack web application through use-case-driven design for both internal and customer needs. Implementing toolchain features to improve developer efficiency and product reliability and performance.", 
-      "job_title": "Incoming GPU Software Development Engineer Internship", 
-      "location": ""
+      "company": "Intel Corporation, AXG Group", 
+      "duration": "May 2022 - Present", 
+      "job_summary": "Built the user role infrastructure for an internal graphics workload management tool by implementing SSO authentication, user authorization, and microservice authentication using the MERN stack and the Azure Active Directory. Automate the prevention, detection, resolution, and report of CI incidents by implementing a three-layer Jenkins health matrix, Prometheus and Grafana CI health data store and dashboard, and a CI firefighter as a Jenkins daemon.", 
+      "job_title": "GPU Software Development Engineer Intern", 
+      "location": "Madison, WI"
     }, 
     {
-      "company": "University of Wisconsin-Madison", 
-      "duration": "Jan 2022 - Present", 
-      "job_summary": "Hosted office hours to answer Computer Graphics questions regarding graphics concepts (e.g. transformations, curves, meshes, shaders, ray tracing, etc.) and APIs (e.g. Canvas, SVG, glMatrix, GLSL, WebGL, Three.js, etc.) for 7 hours each week. Updated the course's website using the Hugo framework and Github Action's CI/CD workflow. Peer-reviewed and debugged bi-weekly student workbooks using the Node.js framework in JavaScript.", 
+      "company": "University of Wisconsin-Madison, Computer Science Department", 
+      "duration": "Jan 2022 - May 2022", 
+      "job_summary": "Hosted Computer Graphics office hours for 7 hours each week for questions about graphics concepts (e.g. transformations, curves, meshes, shaders, ray tracing, etc.) and APIs (e.g. Canvas, SVG, glMatrix, GLSL, WebGL, Three.js, etc.) Maintained and routinely updated the course website using the Hugo framework and Github Action's CI/CD workflow.", 
       "job_title": "Undergraduate Teaching Assistant for Computer Graphics", 
       "location": "Madison, WI"
     }, 
     {
       "company": "Teradata Corporation", 
       "duration": "Jun 2021 - Aug 2021", 
-      "job_summary": "Worked with a world-top commercial bank and was responsible for both improving the ETL routine of the Data Warehouse using Perl and Bash script and performing custom data extraction tasks using Teradata-SQL and DSQL for fraud detection. Led the communication, demand analysis, and SQL development for a complex data extraction task requiring joining more than 20 tables across 2 databases. Wrote peer-reviewed SQL and communicated with the operation team to ship the data in time.", 
+      "job_summary": "Responsible for credit card fraud prevention and detection for a world-top commercial bank. Extracted and processed credit card data from the data warehouse using Teradata SQL and DSQL and improved ETL routines using Perl and Bash scripts. Led the communication, demand analysis, and SQL development for a complex data extraction task requiring joining more than 20 tables across 2 databases. Wrote peer-reviewed SQL and communicated with the operation team to ship the data in time.", 
       "job_title": "Data Engineer Internship", 
-      "location": ""
+      "location": "Madison, WI"
     }
   ]
 }
+
+
+
+
+
