@@ -10,7 +10,7 @@ class ResumeParser():
         openai.api_key = OPENAI_API_KEY
         # GPT-3 completion questions
         self.prompt_questions = \
-"""Summarize the text below into a JSON with exactly the following structure {basic_info: {first_name, last_name, full_name, email, phone_number, location, portfolio_website_url, linkedin_url, github_main_page_url, university, education_level (BS, MS, or PhD), graduation_year, graduation_month, majors, GPA}, work_experience: [{job_title, company, location, duration, job_summary}]}
+"""Summarize the text below into a JSON with exactly the following structure {basic_info: {first_name, last_name, full_name, email, phone_number, location, portfolio_website_url, linkedin_url, github_main_page_url, university, education_level (BS, MS, or PhD), graduation_year, graduation_month, majors, GPA}, work_experience: [{job_title, company, location, duration, job_summary}], project_experience:[{project_name, project_discription}]}
 """
        # set up this parser's logger
         logging.basicConfig(filename='logs/parser.log', level=logging.DEBUG)
@@ -76,6 +76,7 @@ class ResumeParser():
         """
         resume = {}
         pdf_str = self.pdf2string(pdf_path)
+        print(pdf_str)
         prompt = self.prompt_questions + '\n' + pdf_str
         max_tokens = 1500
         engine = 'text-davinci-002'

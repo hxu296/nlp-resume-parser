@@ -27,9 +27,12 @@ To run the RESTFull service in 3 steps:
   - [x] graduation month
   - [x] majors
   - [x] GPA
-- Experience
+- Job Experience
   - [x] job title
   - [x] company
   - [x] location
   - [x] duration
   - [x] job content
+- Project Experience
+  - [x] project name
+  - [x] project description
