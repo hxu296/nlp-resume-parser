@@ -1,2 +1,4 @@
-# ignore pycache
+.DS_Store
 **/__pycache__
+application/uploads
+application/logs
