@@ -55,11 +55,20 @@
             border:0;
             }
         </style>
-        <script></script>
+        <script>
+            function handleFileSelection(event) {
+                const fileInput = event.target;
+                const file = fileInput.files[0];
+                const fileName = file.name;
+
+                const formText = document.getElementById("form-text");
+                formText.innerText = fileName;
+            }
+        </script>
     </head>
     <body>
         <form method=post enctype=multipart/form-data>
-            <input type=file name=file>
+            <input type=file name=file onchange="handleFileSelection(event)">
             <p id=form-text>Drag your resume here or click in this area.</p>
             <button type=submit value=Upload>Upload</button>
         </form>
