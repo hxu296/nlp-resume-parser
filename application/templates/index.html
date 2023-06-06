@@ -69,10 +69,23 @@
                 const button = document.querySelector('button[type="submit"]');
                 button.innerText = "Processing, please wait...";
             }
+
+            function handleFormReset() {
+                const formText = document.getElementById("form-text");
+                formText.innerText = "Drag your resume here or click in this area.";
+
+                const button = document.querySelector('button[type="submit"]');
+                button.innerText = "Upload";
+            }
+
+            window.addEventListener("pageshow", function(event) {
+                const form = document.querySelector("form");
+                form.reset();
+            });
         </script>
     </head>
     <body>
-        <form method=post enctype=multipart/form-data>
+        <form method=post enctype=multipart/form-data onreset="handleFormReset()">
             <input type=file name=file onchange="handleFileSelection(event)">
             <p id=form-text>Drag your resume here or click in this area.</p>
             <button type=submit value=Upload onclick="handleButtonClick()">Upload</button>
