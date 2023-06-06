@@ -2,7 +2,7 @@
 
 GPT-3 based resume parser as a REST API that transforms a [resume PDF like this](https://github.com/hxu296/resume-parser-service/blob/main/examples/SDE_May2023_HuanXu.pdf) to a [JSON like this](https://github.com/hxu296/resume-parser-service/blob/main/examples/resume.json).
 
-Parsing a resume PDF takes around 15 seconds and costs $0.03 using `text-davinci-002` engine (that's why there is no live demo website).
+Parsing a resume PDF takes around 15 seconds and costs about $0.01 for every 500 tokens using `text-davinci-002` engine (that's why there is no live demo website). Note that a typical request and response may use 1500 tokens ($0.03), 3000 tokens ($0.06) or more.
 
 Please note that more accurate results may be achieved by fine-tuning GPT-3, but the out-of-the-box results from this repo are already very impressive.
 
