@@ -64,13 +64,18 @@
                 const formText = document.getElementById("form-text");
                 formText.innerText = fileName;
             }
+
+            function handleButtonClick() {
+                const button = document.querySelector('button[type="submit"]');
+                button.innerText = "Processing, please wait...";
+            }
         </script>
     </head>
     <body>
         <form method=post enctype=multipart/form-data>
             <input type=file name=file onchange="handleFileSelection(event)">
             <p id=form-text>Drag your resume here or click in this area.</p>
-            <button type=submit value=Upload>Upload</button>
+            <button type=submit value=Upload onclick="handleButtonClick()">Upload</button>
         </form>
     </body>
 </html>
