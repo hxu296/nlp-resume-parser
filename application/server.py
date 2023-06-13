@@ -2,11 +2,14 @@ import os
 import secrets
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
+from env_parser import parse_env_file
 from parser import ResumeParser
 import argparse
 
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
+
+env_variables = parse_env_file()
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -14,7 +17,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 app.add_url_rule("/resume/<name>", endpoint="resume", build_only=True)
 app.secret_key = secrets.token_urlsafe(32)
 
-parser = ResumeParser(os.getenv("OPENAI_API_KEY"))
+parser = ResumeParser(os.getenv('OPENAI_API_KEY', env_variables.get('OPENAI_API_KEY')))
 
 def allowed_file(filename):
     return '.' in filename and \
