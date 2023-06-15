@@ -3,6 +3,7 @@ import openai
 import re
 import logging
 import json
+from tokenizer import num_tokens_from_string
 
 class ResumeParser():
     def __init__(self, OPENAI_API_KEY):
@@ -52,16 +53,16 @@ class ResumeParser():
         :return: GPT-3 response object
         """
         self.logger.info(f'query_completion: using {engine}')
-        estimated_prompt_tokens = int(len(prompt.split()) * 1.6)
-        self.logger.info(f'estimated prompt tokens: {estimated_prompt_tokens}')
-        estimated_answer_tokens = 2049 - estimated_prompt_tokens
-        if estimated_answer_tokens < max_tokens:
-            self.logger.warning('estimated_answer_tokens lower than max_tokens, changing max_tokens to', estimated_answer_tokens)
+
+        estimated_prompt_tokens = num_tokens_from_string(prompt, engine)
+        estimated_answer_tokens = (max_tokens - estimated_prompt_tokens)
+        self.logger.info(f'Tokens: {estimated_prompt_tokens} + {estimated_answer_tokens} = {max_tokens}')
+
         response = openai.Completion.create(
         engine=engine,
         prompt=prompt,
         temperature=temperature,
-        max_tokens=min(4096-estimated_prompt_tokens, max_tokens),
+        max_tokens=estimated_answer_tokens,
         top_p=top_p,
         frequency_penalty=frequency_penalty,
         presence_penalty=presence_penalty
