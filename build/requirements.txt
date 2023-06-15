@@ -1,3 +1,4 @@
 pdftotext
 openai
 flask
+tiktoken
