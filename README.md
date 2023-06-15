@@ -15,7 +15,7 @@ Please note that more accurate results may be achieved by fine-tuning GPT-3, but
 1. Check the versions: `python3 --version` and `pip3 --version`.
 1. Run the `./build.sh` in the project root.
 1. Get your [OpenAI API Key](https://openai.com/api/).
-1. Set the environment variable to your API key: `export OPENAI_API_KEY=YOURKEY`
+1. Create a file named `.env` and set your API key in it: `OPENAI_API_KEY=YOURKEY` or set the key in an environment variable: `export OPENAI_API_KEY=YOURKEY`.
 1. Run `./run.sh` in the project root.
 
 A Flask server will start listening to port 5001 of localhost. Feel free to [check it out with your browser](http://0.0.0.0:5001/).
