@@ -79,8 +79,11 @@ class ResumeParser():
         pdf_str = self.pdf2string(pdf_path)
         print(pdf_str)
         prompt = self.prompt_questions + '\n' + pdf_str
-        max_tokens = 1500
+
+        # Reference: https://platform.openai.com/docs/models/gpt-3-5
         engine = 'text-davinci-002'
+        max_tokens = 4097
+
         response = self.query_completion(prompt,engine=engine,max_tokens=max_tokens)
         response_text = response['choices'][0]['text'].strip()
         print(response_text)
